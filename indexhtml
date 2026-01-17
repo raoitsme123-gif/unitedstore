@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United Furniture Traders - Home</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<!-- Header -->
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-900">United Furniture Traders</h1>
+    <nav class="hidden md:flex gap-6">
+      <a href="index.html" class="font-semibold hover:text-yellow-500">Home</a>
+      <a href="products.html" class="font-semibold hover:text-yellow-500">Products</a>
+      <a href="contact.html" class="font-semibold hover:text-yellow-500">Contact</a>
+      <a href="admin.html" class="font-semibold hover:text-yellow-500">Admin</a>
+    </nav>
+    <button id="mobileMenuBtn" class="md:hidden flex flex-col justify-between w-6 h-5">
+      <span class="block h-0.5 bg-gray-900"></span>
+      <span class="block h-0.5 bg-gray-900"></span>
+      <span class="block h-0.5 bg-gray-900"></span>
+    </button>
+  </div>
+  <nav id="mobileMenu" class="hidden md:hidden bg-white shadow-md">
+    <ul class="flex flex-col gap-2 p-2">
+      <li><a href="index.html" class="block font-semibold">Home</a></li>
+      <li><a href="products.html" class="block font-semibold">Products</a></li>
+      <li><a href="contact.html" class="block font-semibold">Contact</a></li>
+      <li><a href="admin.html" class="block font-semibold">Admin</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero Banner -->
+<section id="heroBanner" class="max-w-7xl mx-auto mt-8 rounded overflow-hidden relative"></section>
+
+<!-- Featured Products -->
+<section class="max-w-7xl mx-auto px-4 py-10">
+  <h2 class="text-2xl font-bold mb-6">Featured Products</h2>
+  <div id="featuredProducts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<footer class="bg-black text-white text-center py-6 mt-8">
+  © 2026 United Furniture Traders. All Rights Reserved.
+</footer>
+
+<script>
+// Mobile menu toggle
+const mobileMenuBtn=document.getElementById('mobileMenuBtn');
+const mobileMenu=document.getElementById('mobileMenu');
+mobileMenuBtn.addEventListener('click',()=>{ mobileMenu.classList.toggle('hidden'); });
+
+// Store data (localStorage)
+let storeData=JSON.parse(localStorage.getItem('uft_store'))||{
+  categories:['Sofa','Bed','Dining'],
+  subs:{'Sofa':['2 Seater','3 Seater'],'Bed':['Single','Double','King'],'Dining':['4 Seater','6 Seater']},
+  products:[
+    {title:'Classic Sofa', price:350, img:'https://images.unsplash.com/photo-1616628188340-6f206fdf21e2', category:'Sofa', sub:'2 Seater'},
+    {title:'Modern Bed', price:450, img:'https://images.unsplash.com/photo-1600180758895-0d7ee2a8b4b2', category:'Bed', sub:'Double'},
+    {title:'Dining Table', price:299, img:'https://images.unsplash.com/photo-1586190848861-99aa4a171e90', category:'Dining', sub:'4 Seater'}
+  ],
+  homepage:{bannerImg:'https://images.unsplash.com/photo-1616628188340-6f206fdf21e2', bannerTitle:'Welcome to United Furniture Traders', bannerSubtitle:'Best quality furniture in UK | Cash on Delivery', bannerBtn:'Shop Now', bannerBtnLink:'products.html#productGrid'}
+};
+
+// Render Banner
+function renderBanner(){
+  const heroBanner=document.getElementById('heroBanner');
+  const b=storeData.homepage;
+  heroBanner.innerHTML=`
+    <div class='relative h-64 md:h-96 rounded overflow-hidden' style='background-image:url(${b.bannerImg}); background-size:cover; background-position:center;'>
+      <div class='absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white px-4'>
+        <h1 class='text-3xl md:text-5xl font-bold mb-2'>${b.bannerTitle}</h1>
+        <p class='text-sm md:text-lg mb-4'>${b.bannerSubtitle}</p>
+        <a href='${b.bannerBtnLink}' class='bg-yellow-500 text-white px-6 py-3 rounded font-bold hover:bg-yellow-400'>${b.bannerBtn}</a>
+      </div>
+    </div>`;
+}
+
+// Render Featured Products
+function renderFeaturedProducts(){
+  const container=document.getElementById('featuredProducts');
+  container.innerHTML='';
+  storeData.products.slice(0,6).forEach(p=>{
+    const card=document.createElement('div');
+    card.className='bg-white rounded-xl shadow hover:shadow-lg transition';
+    card.innerHTML=`
+      <img src='${p.img}' class='h-56 w-full object-cover rounded-t-xl' />
+      <div class='p-4'>
+        <h4 class='font-bold text-lg'>${p.title}</h4>
+        <p class='text-sm text-gray-600'>${p.category} | ${p.sub}</p>
+        <p class='font-semibold mt-2'>£${p.price}</p>
+        <a href='https://wa.me/447000000000?text=I want to order ${encodeURIComponent(p.title)}' target='_blank' class='block bg-green-500 text-white text-center mt-2 py-2 rounded font-bold text-sm'>Order on WhatsApp</a>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+renderBanner();
+renderFeaturedProducts();
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United Furniture Traders - Products</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-900">United Furniture Traders</h1>
+    <nav class="hidden md:flex gap-6">
+      <a href="index.html" class="font-semibold hover:text-yellow-500">Home</a>
+      <a href="products.html" class="font-semibold hover:text-yellow-500">Products</a>
+      <a href="contact.html" class="font-semibold hover:text-yellow-500">Contact</a>
+      <a href="admin.html" class="font-semibold hover:text-yellow-500">Admin</a>
+    </nav>
+    <button id="mobileMenuBtn" class="md:hidden flex flex-col justify-between w-6 h-5">
+      <span class="block h-0.5 bg-gray-900"></span>
+      <span class="block h-0.5 bg-gray-900"></span>
+      <span class="block h-0.5 bg-gray-900"></span>
+    </button>
+  </div>
+  <nav id="mobileMenu" class="hidden md:hidden bg-white shadow-md">
+    <ul class="flex flex-col gap-2 p-2">
+      <li><a href="index.html" class="block font-semibold">Home</a></li>
+      <li><a href="products.html" class="block font-semibold">Products</a></li>
+      <li><a href="contact.html" class="block font-semibold">Contact</a></li>
+      <li><a href="admin.html" class="block font-semibold">Admin</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="max-w-7xl mx-auto px-4 py-6">
+  <input type="text" id="searchBar" placeholder="Search products..." class="w-full border rounded px-4 py-2" />
+</section>
+
+<section class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap gap-4" id="categoryMenu"></section>
+
+<section class="max-w-7xl mx-auto px-4 py-6">
+  <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<footer class="bg-black text-white text-center py-6 mt-8">
+  © 2026 United Furniture Traders. All Rights Reserved.
+</footer>
+
+<script>
+const mobileMenuBtn=document.getElementById('mobileMenuBtn');
+const mobileMenu=document.getElementById('mobileMenu');
+mobileMenuBtn.addEventListener('click',()=>{ mobileMenu.classList.toggle('hidden'); });
+
+let storeData=JSON.parse(localStorage.getItem('uft_store'))||{
+  categories:['Sofa','Bed','Dining'],
+  subs:{'Sofa':['2 Seater','3 Seater'],'Bed':['Single','Double','King'],'Dining':['4 Seater','6 Seater']},
+  products:[
+    {title:'Classic Sofa', price:350, img:'https://images.unsplash.com/photo-1616628188340-6f206fdf21e2', category:'Sofa', sub:'2 Seater'},
+    {title:'Modern Bed', price:450, img:'https://images.unsplash.com/photo-1600180758895-0d7ee2a8b4b2', category:'Bed', sub:'Double'},
+    {title:'Dining Table', price:299, img:'https://images.unsplash.com/photo-1586190848861-99aa4a171e90', category:'Dining', sub:'4 Seater'}
+  ]
+};
+
+const productGrid=document.getElementById('productGrid');
+const searchBar=document.getElementById('searchBar');
+const categoryMenu=document.getElementById('categoryMenu');
+
+function renderProducts(filter='',cat='',sub=''){
+  productGrid.innerHTML='';
+  storeData.products.filter(p=>
+    (p.title.toLowerCase().includes(filter.toLowerCase())) &&
+    (cat===''||p.category===cat) &&
+    (sub===''||p.sub===sub)
+  ).forEach(p=>{
+    const card=document.createElement('div');
+    card.className='bg-white rounded-xl shadow hover:shadow-lg transition';
+    card.innerHTML=`<img src="${p.img}" class="h-56 w-full object-cover rounded-t-xl" />
+      <div class="p-4">
+        <h4 class="font-bold text-lg">${p.title}</h4>
+        <p class="text-sm text-gray-600">${p.category} | ${p.sub}</p>
+        <p class="font-semibold mt-2">£${p.price}</p>
+        <a href='https://wa.me/447000000000?text=I want to order ${encodeURIComponent(p.title)}' target='_blank' class='block bg-green-500 text-white text-center mt-2 py-2 rounded font-bold text-sm'>Order on WhatsApp</a>
+      </div>`;
+    productGrid.appendChild(card);
+  });
+}
+
+function renderCategoryMenu(){
+  categoryMenu.innerHTML='';
+  storeData.categories.forEach(c=>{
+    const btn=document.createElement('button');
+    btn.className='bg-gray-200 px-3 py-1 rounded font-semibold hover:bg-yellow-500 hover:text-white';
+    btn.innerText=c;
+    btn.onclick=()=>renderSubMenu(c);
+    categoryMenu.appendChild(btn);
+  });
+}
+
+function renderSubMenu(cat){
+  categoryMenu.innerHTML='';
+  const backBtn=document.createElement('button');
+  backBtn.className='bg-gray-300 px-3 py-1 rounded font-semibold hover:bg-gray-400';
+  backBtn.innerText='← Back';
+  backBtn.onclick=()=>renderCategoryMenu();
+  categoryMenu.appendChild(backBtn);
+
+  storeData.subs[cat].forEach(s=>{
+    const btn=document.createElement('button');
+    btn.className='bg-gray-200 px-3 py-1 rounded font-semibold hover:bg-yellow-500 hover:text-white';
+    btn.innerText=s;
+    btn.onclick=()=>renderProducts('',cat,s);
+    categoryMenu.appendChild(btn);
+  });
+}
+
+searchBar.addEventListener('input',e=>renderProducts(e.target.value));
+renderCategoryMenu();
+renderProducts();
+</script>
+</body>
+</html>
